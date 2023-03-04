@@ -4,12 +4,14 @@ import pandas as pd
 import streamlit as st
 from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url, feature='states')
+url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/MA-25-massachusetts-counties.json"
 
-alt.Chart(states).mark_geoshape(
+data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
+
+base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
     stroke='white'
-).project('albersUsa').properties(
-    width=500,
-    height=300
+).project('mercator').properties(
+    width=800,
+    height=600
 )
