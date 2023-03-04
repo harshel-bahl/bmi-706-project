@@ -10,6 +10,7 @@ library(tidyverse)
 library(finalfit)
 library(ggmap)
 library(ggimage)
+library(lubridate)
 
 # Read in main data set
 data <- read_csv("Mass PFAs Drinking Water.csv")
@@ -31,14 +32,15 @@ merged_data <- left_join(data, locations, by=c("PWS ID"="PWS_ID")) %>%
                                                       "3OUDS" ="11CL-PF3OUDS",
                                                       "PODA" ="HFPO-DA",
                                                       "FOSAA"="NMEFOSAA")),
-         Date=`Collected Date`,Levels =as.numeric(Result),
+         Date=as.POSIXct(`Collected Date`,format = "%m/%d/%Y"), Year = year(Date),
+         Levels =as.numeric(Result),
          Latitude=LATITUDE,Longitude=LONGITUDE) %>% 
-  .[,10:19]
+  .[,10:20]
 
 # Save file
-write_csv(merged_data,"Final Mass Data.csv")
+write_csv(merged_data,"final_mass_data.csv")
 
-
+# Scouting Plot
 Mass_box <- c(bottom = 41.24394, left  = -73.45850, 
                    top = 42.88459, right = -69.95256)
 
