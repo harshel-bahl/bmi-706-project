@@ -9,6 +9,9 @@ url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/
 
 data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
+modeArray = ['Intensity Map', 'Distribution Map', 'Time Series']
+
+# Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
     stroke='white'
@@ -23,5 +26,7 @@ points = alt.Chart(data.iloc[:500,]).mark_circle().encode(
     size=alt.value(10),
     tooltip='Towns'
 )
+
+# Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 
 st.altair_chart(base + points, use_container_width=True)
