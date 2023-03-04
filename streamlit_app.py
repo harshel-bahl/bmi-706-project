@@ -9,9 +9,7 @@ url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/
 
 data_map = alt.topo_feature("https://raw.githubusercontent.com/harshel-bahl/bmi-706-project/main/MA-25-massachusetts-counties.json?token=GHSAT0AAAAAAB63X2WLDBDXLRR72JL3HEKKZADYCOQ", "cb_2015_massachusetts_county_20m")
 
-print(data_map)
-
-base = alt.Chart(data_map.properties).mark_geoshape(
+base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).project('mercator').properties(
