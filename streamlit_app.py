@@ -14,3 +14,5 @@ base = alt.Chart(data_map).mark_geoshape(
     width=800,
     height=600
 )
+
+base
