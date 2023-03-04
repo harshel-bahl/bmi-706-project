@@ -22,7 +22,7 @@ base = alt.Chart(data_map).mark_geoshape(
 points = alt.Chart(data.iloc[:500,]).mark_circle().encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',
-    Color='Levels:Q',
+    Color='Levels',
     tooltip='Towns'
 )
 
