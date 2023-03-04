@@ -17,4 +17,11 @@ base = alt.Chart(data_map).mark_geoshape(
     height=600
 )
 
-st.altair_chart(base, use_container_width=True)
+points = alt.Chart(data.iloc[:500,]).mark_circle().encode(
+    longitude='Longitude:Q',
+    latitude='Latitude:Q',
+    size=alt.value(10),
+    tooltip='Towns'
+)
+
+st.altair_chart(base + points, use_container_width=True)
