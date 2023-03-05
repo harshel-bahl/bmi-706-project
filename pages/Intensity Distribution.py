@@ -15,6 +15,7 @@ data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0], max_selections=3)
 subData = data[data["Year"].isin(selectedYears)]
+subData["Levels"] = subData["Levels"]*10
 #subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
 
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
@@ -34,7 +35,7 @@ points = alt.Chart(subData).mark_circle().encode(
     latitude='Latitude:Q',
     color=levelsColor,
     size=alt.value(100),
-    opacity=alt.value(1),
+    opacity=alt.value(0.75),
     tooltip='Towns'
 )
 
