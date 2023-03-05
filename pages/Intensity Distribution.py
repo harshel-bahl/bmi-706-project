@@ -47,7 +47,7 @@ def createGroups(rowValues):
         return 20
     elif rowValues['Levels'] > quantiles[8] and rowValues['Levels'] < quantiles[7]:
         return 10
-    else:
+    elif rowValues['Levels'] < quantiles[8]:
         return 0
     
 
