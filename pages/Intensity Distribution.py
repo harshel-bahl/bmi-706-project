@@ -24,7 +24,7 @@ points = alt.Chart(data.iloc[:500,]).mark_circle().encode(
     latitude='Latitude:Q',
     color=alt.Color('Levels', type='quantitative', scale=alt.Scale(scheme='blues', type='log', domain=(0.01,100), reverse=False), legend=alt.Legend(title="Contamination Levels")),
     size=alt.value(50),
-    opacity=alt.value(0.5),
+    opacity=alt.value(0.25),
     tooltip='Towns'
 )
 
