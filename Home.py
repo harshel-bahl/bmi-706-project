@@ -15,8 +15,8 @@ data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 # Side bar
 st.sidebar.subheader("What are PFAS?")
 st.sidebar.info("PFAS (per- and polyfluoroalkyl substances) are a group of synthetic chemicals widely used in various industries and products due to their unique properties.")
-st.sidebar.subheader("Potential Problem")           
-st.sidebar.info("However, they are persistent and do not break down easily in the environment, which means they can accumulate in soil, water, and living organisms, including humans, leading to adverse health problems.")
+st.sidebar.subheader("Potential Problems")           
+st.sidebar.info("They are persistent and do not break down easily in the environment, which means they can accumulate in soil, water, and living organisms, including humans, leading to adverse health problems.")
 st.sidebar.info("Some PFAS have been associated with adverse health effects, leading to many governments and organizations taking steps to restrict or ban their use and investigate safer alternatives.")
 
 
