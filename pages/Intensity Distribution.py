@@ -31,21 +31,21 @@ quantiles = [subData["Levels"].quantile(0.9),
 def createGroups(rowValues):
     if rowValues['Levels'] > quantiles[0]:
         return 90
-    elif rowValues['Levels'] > quantiles[1]:
+    elif rowValues['Levels'] > quantiles[1] and rowValues['Levels'] < quantiles[0]:
         return 80
-    elif rowValues['Levels'] > quantiles[2]:
+    elif rowValues['Levels'] > quantiles[2] and rowValues['Levels'] < quantiles[1]:
         return 70
-    elif rowValues['Levels'] > quantiles[3]:
+    elif rowValues['Levels'] > quantiles[3] and rowValues['Levels'] < quantiles[2]:
         return 60
-    elif rowValues['Levels'] > quantiles[4]:
+    elif rowValues['Levels'] > quantiles[4] and rowValues['Levels'] < quantiles[3]:
         return 50
-    elif rowValues['Levels'] > quantiles[5]:
+    elif rowValues['Levels'] > quantiles[5] and rowValues['Levels'] < quantiles[4]:
         return 40
-    elif rowValues['Levels'] > quantiles[6]:
+    elif rowValues['Levels'] > quantiles[6] and rowValues['Levels'] < quantiles[5]:
         return 30
-    elif rowValues['Levels'] > quantiles[7]:
+    elif rowValues['Levels'] > quantiles[7] and rowValues['Levels'] < quantiles[6]:
         return 20
-    elif rowValues['Levels'] > quantiles[8]:
+    elif rowValues['Levels'] > quantiles[8] and rowValues['Levels'] < quantiles[7]:
         return 10
     else:
         return 0
@@ -74,7 +74,7 @@ points = alt.Chart(subData).mark_circle().encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',
     color=levelsColor,
-    size="Year",
+    size=alt.value(100),
     opacity=alt.value(0.5),
     tooltip='Towns'
 )
