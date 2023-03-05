@@ -6,7 +6,7 @@ import streamlit as st
 
 # Pre-processing - get relevant unique values for columns and scale levels
 data = pd.read_csv("final_mass_data.csv")
-data["Levels"] = (data["Levels"]-data["Levels"].min)/(data["Levels"].max-data["Levels"].min)
+data["Levels"] = (data["Levels"]-data["Levels"].min())/(data["Levels"].max()-data["Levels"].min())
 print(data)
 poss_years = data["Year"].unique()
 
