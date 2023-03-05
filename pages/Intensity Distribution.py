@@ -30,8 +30,8 @@ points = alt.Chart(subData).mark_circle().encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',
     color=alt.Color('Levels', type='quantitative', scale=alt.Scale(scheme='blues', type='log', reverse=False), legend=alt.Legend(title="Contamination Levels")),
-    size=alt.value(30),
-    opacity=alt.value(1),
+    size=alt.value(50),
+    #opacity=alt.value(1),
     tooltip='Towns'
 )
 
