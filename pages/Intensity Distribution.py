@@ -27,7 +27,7 @@ base = alt.Chart(data_map).mark_geoshape(
 )
 
 # add threshold levels in place of quantiles for interpretability
-levelsScale = alt.Scale(domain=[subData['Levels'].quantile(0.1), subData['Levels'].quantile(0.9)], scheme='oranges', clamp=True)
+levelsScale = alt.Scale(domain=[subData['Levels'].quantile(0.1), subData['Levels'].quantile(1)], scheme='oranges', clamp=True)
 levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
 points = alt.Chart(subData).mark_circle().encode(
