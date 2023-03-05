@@ -5,7 +5,7 @@ import streamlit as st
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 
 # Pre-processing - get relevant unique values for columns and scale levels
-data = pd.read_csv("../final_mass_data.csv")
+data = pd.read_csv("final_mass_data.csv")
 poss_years = data["Year"].unique()
 
 # take json data to create map on streamlit
