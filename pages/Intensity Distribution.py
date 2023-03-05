@@ -35,7 +35,7 @@ points = alt.Chart(subData).mark_circle().encode(
     latitude='Latitude:Q',
     color=levelsColor,
     size=alt.value(100),
-    opacity=alt.value(0.75),
+    opacity=alt.value(1),
     tooltip='Towns'
 )
 
