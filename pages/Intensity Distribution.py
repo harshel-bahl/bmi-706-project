@@ -13,7 +13,7 @@ data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0])
-subData = data[data["Country"].isin(selectedYears)]
+subData = data[data["Year"].isin(selectedYears)]
 
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 base = alt.Chart(data_map).mark_geoshape(
