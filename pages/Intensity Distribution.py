@@ -26,7 +26,7 @@ base = alt.Chart(data_map).mark_geoshape(
     height=600
 )
 
-levelsScale = alt.Scale(domain=[subData['Levels'].min(), subData['Levels'].max()], scheme='oranges', type='log')
+levelsScale = alt.Scale(domain=[subData['Levels'].min(), subData['Levels'].max()], scheme='oranges', type='log', clamp=True)
 levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
 points = alt.Chart(subData).mark_circle().encode(
