@@ -17,6 +17,36 @@ selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0], max_sel
 subData = data[data["Year"].isin(selectedYears)]
 subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
 
+# create contaminant groups for slider
+
+def createGroups(rowValues):
+    if rowValues['Levels'] > subData["Levels"].quantile(0.9):
+        return 90
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.8):
+        return 80
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.7):
+        return 70
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.6):
+        return 60
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.5):
+        return 50
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.4):
+        return 40
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.3):
+        return 30
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.2):
+        return 20
+    elif rowValues['Levels'] > subData["Levels"].quantile(0.1):
+        return 10
+    else:
+        return 0
+    
+
+subData["LevelGroup"] = subData.apply(lambda rowValues: createGroups(rowValues), axis=1)
+
+selectedLevelGroup = st.slider("LevelGroup", min_value=0, max_value=90, step=10, value=50)
+subData = data[data["LevelGroup"].isin(selectedLevelGroup)]
+
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
