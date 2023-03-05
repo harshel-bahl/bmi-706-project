@@ -4,7 +4,10 @@ import streamlit as st
 
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 
+# Pre-processing - get relevant unique values for columns and scale levels
 data = pd.read_csv("final_mass_data.csv")
+data["Levels"] = (data["Levels"]-data["Levels"].min)/(data["Levels"].max-data["Levels"].min)
+print(data)
 poss_years = data["Year"].unique()
 
 url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/MA-25-massachusetts-counties.json"
@@ -12,7 +15,7 @@ url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/
 data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
 # multi-selector to choose which years to display on chart
-selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0])
+selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0], max_selections=3)
 subData = data[data["Year"].isin(selectedYears)]
 
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
