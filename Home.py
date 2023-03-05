@@ -13,8 +13,20 @@ data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
 # App Aesthetics
 
+
+html_temp = """
+    <div style="background-color:tomato;padding:10px">
+    <h2 style="color:white;text-align:center;">PFAS Water Contamination Monitoring App</h2>
+    </div>
+    """
+st.markdown(html_temp,unsafe_allow_html=True)
+
+
+st.write("")
+st.write("")
+
 # Row A
-st.markdown('### Metrics')
+st.markdown('### Massachusetts PFAS Statistics')
 col1, col2, col3 = st.columns(3)
 col1.metric("Temperature", "70 °F", "1.2 °F")
 col2.metric("Wind", "9 mph", "-8%")
@@ -31,19 +43,21 @@ substance_colors = {
     'PFHXA': 'pink', 
     'PFAS6': 'gray', 
     'NMEFOSAA': 'teal', 
-    'PFDA': 'navy', 
     'ADONA': 'olive', 
     'HFPO-DA': 'magenta', 
     '11CL-PF3OUDS': 'maroon', 
     '9CL-PF3ONS': 'coral', 
     'PFUNA': 'indigo', 
-    'PFTRDA': 'khaki', 
-    'PFTA': 'salmon', 
-    'PFDOA': 'sienna'
-}
+    'PFTRDA': 'khaki',  
+    'PFDOA': 'sienna',
+    ' PFDA':'black',
+    ' PFTA':'white'}
 
 
 Substance_type = data["Abbreviation"].unique()
+
+st.write("")
+st.write("")
 
 # Selection Box for Different Substances
 substances = st.multiselect(
@@ -53,8 +67,7 @@ substances = st.multiselect(
                "PFNA",
                "PFTRDA",
                "ADONA",
-               "NMEFOSAA"],
-    ##format_func=lambda option: f'<span style="background-color: {substance_colors[option]}; padding: 8px; border-radius: 5px;">{option}</span>'
+               "NMEFOSAA"]
 )
 
 filtered_data = data[data['Abbreviation'].isin(substances)]
@@ -62,6 +75,8 @@ filtered_data = data[data['Abbreviation'].isin(substances)]
 # Create a dictionary to map each substance to its corresponding color
 substance_color_map = {substance: substance_colors[substance] for substance in filtered_data['Abbreviation'].unique()}
 
+st.write("")
+st.write("")
 
 subset = data[data["Abbreviation"].isin(substances)]
 
@@ -89,10 +104,23 @@ points = alt.Chart(subset.iloc[:3000,]).mark_circle(opacity=0.1).encode(
     latitude='Latitude:Q',    
     color=alt.Color("Abbreviation:N", scale=alt.Scale(domain=list(substance_color_map.keys()), range=list(substance_color_map.values()))),
     size=alt.value(600),
-    tooltip=['Towns:N','Abbreviation:N'])
+    #tooltip=['Towns:N','Abbreviation:N'])
+    tooltip=[alt.Tooltip('Towns:N', title='Location'), alt.Tooltip('Abbreviation:N', title='Substance')])
 
 Map_chart = Map + points
 
 st.altair_chart(Map_chart, use_container_width=True)
 
+# Filter subsetted data based on selected year and substances
+subset_filtered = subset.loc[(subset['Year'] == year) & (subset['Abbreviation'].isin(substances)), :]
 
+
+html_temp = """
+    <div style="background-color:blue;padding:10px">
+    <h2 style="color:white;text-align:center;">Top PFAS Contaninants by Town</h2>
+    </div>
+    """
+st.markdown(html_temp,unsafe_allow_html=True)
+
+# Show filtered data in a table
+st.dataframe(subset_filtered[["Year", "Towns","Abbreviation","Levels"]].sort_values(by="Levels", ascending=False).drop_duplicates(subset="Towns").reset_index(drop=True), width=1000)
