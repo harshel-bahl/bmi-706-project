@@ -11,8 +11,16 @@ url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/
 # Extract Map Data
 data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
-# App Aesthetics
 
+# Side bar
+st.sidebar.subheader("What are PFAS?")
+st.sidebar.info("PFAS (per- and polyfluoroalkyl substances) are a group of synthetic chemicals widely used in various industries and products due to their unique properties.")
+st.sidebar.subheader("Potential Problem")           
+st.sidebar.info("However, they are persistent and do not break down easily in the environment, which means they can accumulate in soil, water, and living organisms, including humans, leading to adverse health problems.")
+st.sidebar.info("Some PFAS have been associated with adverse health effects, leading to many governments and organizations taking steps to restrict or ban their use and investigate safer alternatives.")
+
+
+# App Aesthetics
 
 html_temp = """
     <div style="background-color:tomato;padding:10px">
@@ -26,11 +34,11 @@ st.write("")
 st.write("")
 
 # Row A
-st.markdown('### Massachusetts PFAS Statistics')
+st.markdown('### Massachusetts PFAS Statistics 2016-2023')
 col1, col2, col3 = st.columns(3)
-col1.metric("Temperature", "70 °F", "1.2 °F")
-col2.metric("Wind", "9 mph", "-8%")
-col3.metric("Humidity", "86%", "4%")
+col1.metric("Most Contaminated Town", "HUDSON")
+col2.metric("Top PFAS", "PFOS")
+col3.metric("Highest Recorded Level", "955 ng/L ")
 
 # Define a dictionary to store the colors of each substance
 substance_colors = {
@@ -61,13 +69,9 @@ st.write("")
 
 # Selection Box for Different Substances
 substances = st.multiselect(
-    "Types of Per- and Polyfluorinated Substances (PFAS)",
+    "Select PFAS for Geographic Distribution:",
     options = Substance_type,
-    default = ["PFOS",
-               "PFNA",
-               "PFTRDA",
-               "ADONA",
-               "NMEFOSAA"]
+    default = ["PFOS"]
 )
 
 filtered_data = data[data['Abbreviation'].isin(substances)]
@@ -90,33 +94,29 @@ subset = subset[subset["Year"] == year]
 
 Map = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
-    stroke='white'
+    stroke='white'    
 ).project('mercator').properties(
     width=800,
     height=600)
 
 
-legend_title = 'Substances'
-legend_order = list(substance_color_map.keys())
 
-points = alt.Chart(subset.iloc[:3000,]).mark_circle(opacity=0.1).encode(
+points = alt.Chart(subset).mark_circle(opacity=0.1).encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',    
     color=alt.Color("Abbreviation:N", scale=alt.Scale(domain=list(substance_color_map.keys()), range=list(substance_color_map.values()))),
-    size=alt.value(600),
-    #tooltip=['Towns:N','Abbreviation:N'])
-    tooltip=[alt.Tooltip('Towns:N', title='Location'), alt.Tooltip('Abbreviation:N', title='Substance')])
-
+    size=alt.value(600),   
+    tooltip=[alt.Tooltip('Towns:N', title='Location'), alt.Tooltip('Abbreviation:N', title='Substance'),alt.Tooltip('Levels:N', title='Level')])
 Map_chart = Map + points
 
 st.altair_chart(Map_chart, use_container_width=True)
 
 # Filter subsetted data based on selected year and substances
 subset_filtered = subset.loc[(subset['Year'] == year) & (subset['Abbreviation'].isin(substances)), :]
-
+subset_filtered.Year = subset_filtered.Year.astype(str)
 
 html_temp = """
-    <div style="background-color:blue;padding:10px">
+    <div style="background-color:salmon;padding:10px">
     <h2 style="color:white;text-align:center;">Top PFAS Contaninants by Town</h2>
     </div>
     """
