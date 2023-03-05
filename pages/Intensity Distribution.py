@@ -18,25 +18,34 @@ subData = data[data["Year"].isin(selectedYears)]
 subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
 
 # create contaminant groups for slider
+quantiles = [subData["Levels"].quantile(0.9),
+             subData["Levels"].quantile(0.8),
+             subData["Levels"].quantile(0.7),
+             subData["Levels"].quantile(0.6),
+             subData["Levels"].quantile(0.5),
+             subData["Levels"].quantile(0.4),
+             subData["Levels"].quantile(0.3),
+             subData["Levels"].quantile(0.2),
+             subData["Levels"].quantile(0.1)]
 
 def createGroups(rowValues):
-    if rowValues['Levels'] > subData["Levels"].quantile(0.9):
+    if rowValues['Levels'] > quantiles[0]:
         return 90
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.8):
+    elif rowValues['Levels'] > quantiles[1]:
         return 80
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.7):
+    elif rowValues['Levels'] > quantiles[2]:
         return 70
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.6):
+    elif rowValues['Levels'] > quantiles[3]:
         return 60
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.5):
+    elif rowValues['Levels'] > quantiles[4]:
         return 50
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.4):
+    elif rowValues['Levels'] > quantiles[5]:
         return 40
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.3):
+    elif rowValues['Levels'] > quantiles[6]:
         return 30
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.2):
+    elif rowValues['Levels'] > quantiles[7]:
         return 20
-    elif rowValues['Levels'] > subData["Levels"].quantile(0.1):
+    elif rowValues['Levels'] > quantiles[8]:
         return 10
     else:
         return 0
@@ -44,8 +53,9 @@ def createGroups(rowValues):
 
 subData["LevelGroup"] = subData.apply(lambda rowValues: createGroups(rowValues), axis=1)
 
+
 selectedLevelGroup = st.slider("LevelGroup", min_value=0, max_value=90, step=10, value=50)
-subData = data[data["LevelGroup"].isin(selectedLevelGroup)]
+subData = subData[subData["LevelGroup"]==selectedLevelGroup]
 
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 base = alt.Chart(data_map).mark_geoshape(
