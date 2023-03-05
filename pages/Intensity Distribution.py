@@ -74,7 +74,7 @@ points = alt.Chart(subData).mark_circle().encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',
     color=levelsColor,
-    size=alt.value(100),
+    size="Year",
     opacity=alt.value(0.5),
     tooltip='Towns'
 )
