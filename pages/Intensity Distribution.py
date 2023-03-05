@@ -22,7 +22,7 @@ base = alt.Chart(data_map).mark_geoshape(
 points = alt.Chart(data.iloc[:500,]).mark_circle().encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',
-    color=alt.Color('Levels', type='quantitative', scale=alt.Scale(scheme='blues'), legend=alt.Legend(title="Contamination Levels")),
+    color=alt.Color('Levels', type='quantitative', scale=alt.Scale(scheme='blues', reverse=True), legend=alt.Legend(title="Contamination Levels")),
     size=alt.value(50),
     tooltip='Towns'
 )
