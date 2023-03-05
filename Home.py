@@ -1,4 +1,3 @@
-
 import altair as alt
 import pandas as pd
 import streamlit as st
@@ -9,6 +8,7 @@ url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/
 
 data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
+# Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
     stroke='white'
@@ -17,4 +17,11 @@ base = alt.Chart(data_map).mark_geoshape(
     height=600
 )
 
-st.altair_chart(base, use_container_width=True)
+points = alt.Chart(data.iloc[:500,]).mark_circle().encode(
+    longitude='Longitude:Q',
+    latitude='Latitude:Q',
+    size=alt.value(20),
+    tooltip='Towns'
+)
+
+st.altair_chart(base + points, use_container_width=True)
