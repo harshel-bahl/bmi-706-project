@@ -15,7 +15,7 @@ data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0], max_selections=3)
 subData = data[data["Year"].isin(selectedYears)]
-#subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
+subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
 
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 base = alt.Chart(data_map).mark_geoshape(
@@ -26,7 +26,7 @@ base = alt.Chart(data_map).mark_geoshape(
     height=600
 )
 
-# type='log', 
+# add threshold levels in place of quantiles for interpretability
 levelsScale = alt.Scale(domain=[subData['Levels'].quantile(0.1), subData['Levels'].quantile(0.9)], scheme='oranges', clamp=True)
 levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
