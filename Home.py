@@ -105,7 +105,7 @@ points = alt.Chart(subset).mark_circle(opacity=0.1).encode(
     longitude='Longitude:Q',
     latitude='Latitude:Q',    
     color=alt.Color("Abbreviation:N", scale=alt.Scale(domain=list(substance_color_map.keys()), range=list(substance_color_map.values()))),
-    size=alt.value(600),   
+    size=alt.value(200),   
     tooltip=[alt.Tooltip('Towns:N', title='Location'), alt.Tooltip('Abbreviation:N', title='Substance'),alt.Tooltip('Levels:N', title='Level')])
 Map_chart = Map + points
 
