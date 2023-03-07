@@ -75,7 +75,7 @@ def createChart(inputData, colorScheme):
     levelsScale = alt.Scale(domain=[inputData['Levels'].quantile(0.1), inputData['Levels'].quantile(0.9)], scheme=colorScheme, clamp=True)
     levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
-    points = alt.Chart(inputData, mark="square").encode(
+    points = alt.Chart(inputData, mark="tick").encode(
         longitude='Longitude:Q',
         latitude='Latitude:Q',
         color=levelsColor,
