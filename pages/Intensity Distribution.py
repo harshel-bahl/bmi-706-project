@@ -88,11 +88,11 @@ def createChart(inputData, colorScheme):
 
 chart = base
 
-# if len(selectedYears) == 2:
-#     chart = chart + createChart(subData, colorSchemes[2]) + createChart(subData, colorSchemes[2])
+if len(selectedYears) == 2:
+    chart = chart + createChart(subData["Year"==selectedYears[0]], colorSchemes[0]) + createChart(subData["Year"==selectedYears[1]], colorSchemes[1])
 
-for i in range(len(selectedYears)):
+# for i in range(len(selectedYears)):
     
-    chart = chart + createChart(subData["Year"==selectedYears[i]], colorSchemes[i])
+#     chart = chart + createChart(subData["Year"==selectedYears[i]], colorSchemes[i])
 
 st.altair_chart(chart, use_container_width=True)
