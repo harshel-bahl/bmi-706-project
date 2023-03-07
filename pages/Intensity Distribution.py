@@ -67,16 +67,28 @@ base = alt.Chart(data_map).mark_geoshape(
 )
 
 # add threshold levels in place of quantiles for interpretability
-levelsScale = alt.Scale(domain=[subData['Levels'].quantile(0.1), subData['Levels'].quantile(0.9)], scheme='oranges', clamp=True)
-levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
-points = alt.Chart(subData).mark_circle().encode(
-    longitude='Longitude:Q',
-    latitude='Latitude:Q',
-    color=levelsColor,
-    size=alt.value(100),
-    opacity=alt.value(0.5),
-    tooltip='Towns'
-)
+colorSchemes = ["oranges", "blues", "reds"]
 
-st.altair_chart(base + points, use_container_width=True)
+def createChart(inputData, colorScheme):
+
+    levelsScale = alt.Scale(domain=[inputData['Levels'].quantile(0.1), inputData['Levels'].quantile(0.9)], scheme='oranges', clamp=True)
+    levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
+
+    points = alt.Chart(inputData).mark_circle().encode(
+        longitude='Longitude:Q',
+        latitude='Latitude:Q',
+        color=levelsColor,
+        size=alt.value(100),
+        opacity=alt.value(0.5),
+        tooltip='Towns'
+    )
+
+    return points
+
+chart = base
+
+for i in range(len(selectedLevelGroup)):
+    chart = chart + createChart(subData, colorSchemes[i])
+
+st.altair_chart(chart, use_container_width=True)
