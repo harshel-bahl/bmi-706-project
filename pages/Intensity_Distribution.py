@@ -89,7 +89,7 @@ def createChart(inputData, colorScheme):
 chart = base
 
 if len(selectedYears) == 2:
-    chart = chart + createChart(subData, colorSchemes[1])
+    chart = chart + createChart(subData, colorSchemes[2])
 
 # for i in range(len(selectedYears)):
 #     print("the values:", i)
