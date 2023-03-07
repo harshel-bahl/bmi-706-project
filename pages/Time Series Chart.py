@@ -5,7 +5,7 @@ import streamlit as st
 # Time Series Chart - show PFA levels over time for a given site
 
 # Pre-processing - get relevant unique values for columns and scale levels
-data1 = pd.read_csv("C:/Data/BMI706/bmi-706-project/final_mass_data.csv")
+data1 = pd.read_csv("final_mass_data.csv")
 
 st.write("PFA Levels over time")
 
