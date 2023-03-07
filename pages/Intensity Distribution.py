@@ -89,6 +89,7 @@ def createChart(inputData, colorScheme):
 chart = base
 
 for i in range(len(selectedYears)):
+    print(i)
     chart = chart + createChart(subData, colorSchemes[i])
 
 st.altair_chart(chart, use_container_width=True)
