@@ -68,7 +68,7 @@ base = alt.Chart(data_map).mark_geoshape(
 
 # add threshold levels in place of quantiles for interpretability
 
-markSchemes = ["circle", "point", "square"]
+markSchemes = ["circle", "square", "point"]
 
 def createChart(inputData, markScheme):
 
@@ -88,11 +88,7 @@ def createChart(inputData, markScheme):
 
 chart = base
 
-if len(selectedYears) == 2:
-    chart = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0]) + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
-
-# for i in range(len(selectedYears)):
-    
-#     chart = chart + createChart(subData["Year"==selectedYears[i]], colorSchemes[i])
+for i in range(len(selectedYears)):
+    chart = chart + createChart(subData[subData["Year"]==selectedYears[i]], markSchemes[i])
 
 st.altair_chart(chart, use_container_width=True)
