@@ -5,7 +5,7 @@ import streamlit as st
 # Intensity Map: intensity of PFAs overlayed across the base map of Massachussetts
 
 # Pre-processing - get relevant unique values for columns and scale levels
-data = pd.read_csv("final_mass_data.csv")
+data = pd.read_csv("../final_mass_data.csv")
 poss_years = data["Year"].unique()
 
 # take json data to create map on streamlit
@@ -13,7 +13,7 @@ url  = "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/
 data_map = alt.topo_feature(url, "cb_2015_massachusetts_county_20m")
 
 # multi-selector to choose which years to display on chart
-selectedYears = st.multiselect("Years Shown", poss_years, poss_years[0], max_selections=3)
+selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=3)
 subData = data[data["Year"].isin(selectedYears)]
 subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
 
@@ -88,8 +88,11 @@ def createChart(inputData, colorScheme):
 
 chart = base
 
-for i in range(len(selectedYears)):
-    print(i)
-    chart = chart + createChart(subData, colorSchemes[i])
+if len(selectedYears) == 2:
+    chart = chart + createChart(subData, colorSchemes[1])
+
+# for i in range(len(selectedYears)):
+#     print("the values:", i)
+#     chart = chart + createChart(subData, colorSchemes[i])
 
 st.altair_chart(chart, use_container_width=True)
