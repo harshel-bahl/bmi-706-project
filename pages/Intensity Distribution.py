@@ -95,4 +95,4 @@ if len(selectedYears) == 2:
     
 #     chart = chart + createChart(subData["Year"==selectedYears[i]], colorSchemes[i])
 
-st.altair_chart(chart, use_container_width=True)
+#st.altair_chart(chart, use_container_width=True)
