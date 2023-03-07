@@ -116,13 +116,6 @@ st.markdown(html_temp,unsafe_allow_html=True)
 st.write("")
 st.write("")
 
-# Row A
-#st.markdown('### Massachusetts PFAS Statistics 2016-2023')
-#st.write("")
-#col1, col2, col3 = st.columns(3)
-#col1.metric("Most Contaminated Town", "HUDSON")
-#col2.metric("Top PFAS", "PFOS")
-#col3.metric("Highest Recorded Level", "955 ng/L ")
 
 # Define a dictionary to store the colors of each substance
 substance_colors = {
