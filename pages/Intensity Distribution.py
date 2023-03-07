@@ -68,7 +68,7 @@ base = alt.Chart(data_map).mark_geoshape(
 
 # add threshold levels in place of quantiles for interpretability
 
-colorSchemes = ["oranges", "blues", "greens"]
+colorSchemes = ["blues", "oranges", "greens"]
 
 def createChart(inputData, colorScheme):
 
