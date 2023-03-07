@@ -20,13 +20,11 @@ chemicals=st.multiselect(label="Chemical", options = chemicalslist, default = "P
 
 data = data[data["Chemical"].isin(chemicals)]
 
-selector = alt.selection_single( fields = ['Chemical'])
-
 base = alt.Chart(data).properties().encode(
     x=alt.X('Date:T'),
     y=alt.Y('Levels:Q'),
     color=alt.Color('Chemical:N')
-).add_selection(selector).transform_filter(selector)
+)
 
 brush = alt.selection_interval(encodings=['x'])
 
