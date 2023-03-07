@@ -68,14 +68,14 @@ base = alt.Chart(data_map).mark_geoshape(
 
 # add threshold levels in place of quantiles for interpretability
 
-colorSchemes = ["blues", "oranges", "greens"]
+markSchemes = ["circle", "point", "square"]
 
-def createChart(inputData, colorScheme):
+def createChart(inputData, markScheme):
 
-    levelsScale = alt.Scale(domain=[inputData['Levels'].quantile(0.1), inputData['Levels'].quantile(0.9)], scheme=colorScheme, clamp=True)
+    levelsScale = alt.Scale(domain=[inputData['Levels'].quantile(0.1), inputData['Levels'].quantile(0.9)], scheme="blues", clamp=True)
     levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
-    points = alt.Chart(inputData, mark="point").encode(
+    points = alt.Chart(inputData, mark=markScheme).encode(
         longitude='Longitude:Q',
         latitude='Latitude:Q',
         color=levelsColor,
@@ -89,7 +89,7 @@ def createChart(inputData, colorScheme):
 chart = base
 
 if len(selectedYears) == 2:
-    chart = chart + createChart(subData[subData["Year"]==selectedYears[0]], colorSchemes[0]) #+ createChart(subData[subData["Year"]==selectedYears[1]], colorSchemes[1])
+    chart = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0]) + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
 
 # for i in range(len(selectedYears)):
     
