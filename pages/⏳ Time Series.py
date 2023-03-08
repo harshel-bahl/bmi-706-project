@@ -108,39 +108,39 @@ st.write("")
 # st.write("PFA Levels over time")
 
 # Pre-processing - get relevant unique values for columns and scale levels
-# data1 = pd.read_csv("final_mass_data.csv")
+data1 = pd.read_csv("final_mass_data.csv")
 
-# siteslist = data1['Towns'].unique()
-# site_select = st.selectbox(label="Towns", options=siteslist, index=0)
+siteslist = data1['Towns'].unique()
+site_select = st.selectbox(label="Towns", options=siteslist, index=0)
 
-# data = data1[data1["Towns"]==site_select]
+data = data1[data1["Towns"]==site_select]
 
-# chemicalslist = data1['Abbreviation'].unique()
+chemicalslist = data1['Abbreviation'].unique()
 
-# chemicals = st.multiselect(label="Chemical", options = chemicalslist, default="PFOS")
+chemicals = st.multiselect(label="Chemical", options = chemicalslist, default="PFOS")
 
-# data = data[data["Abbreviation"].isin(chemicals)]
+data = data[data["Abbreviation"].isin(chemicals)]
 
-# selector = alt.selection_single( fields = ['Chemical'])
+selector = alt.selection_single( fields = ['Chemical'])
 
-# data["Date"] = data["Date"].str.replace("T.*", "", regex=True)
+data["Date"] = data["Date"].str.replace("T.*", "", regex=True)
 
-# base = alt.Chart(data).properties().encode(
-#     x=alt.X('Date:T'),
-#     y=alt.Y('Levels:Q'),
-#     color=alt.Color('Abbreviation:N')
-# ).add_selection(selector).transform_filter(selector)
+base = alt.Chart(data).properties().encode(
+    x=alt.X('Date:T'),
+    y=alt.Y('Levels:Q'),
+    color=alt.Color('Abbreviation:N')
+).add_selection(selector).transform_filter(selector)
 
-# brush = alt.selection_interval(encodings=['x'])
+brush = alt.selection_interval(encodings=['x'])
 
-# upper = base.mark_line(point=True).encode(
-#     alt.X('Date:T', scale = alt.Scale(domain=brush))
-# ).transform_filter(brush)
+upper = base.mark_line(point=True).encode(
+    alt.X('Date:T', scale = alt.Scale(domain=brush))
+).transform_filter(brush)
 
-# lower = base.mark_bar().add_selection(brush)
+lower = base.mark_bar().add_selection(brush)
 
-# lower=lower.properties(height=50)
+lower=lower.properties(height=50)
 
-# chart1 = upper & lower
+chart1 = upper & lower
 
-# st.altair_chart(chart1, use_container_width=True)
+st.altair_chart(chart1, use_container_width=True)
