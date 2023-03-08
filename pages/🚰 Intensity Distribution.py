@@ -184,7 +184,7 @@ def createChart(inputData, markScheme):
         size=alt.value(100),
         opacity=alt.value(0.5),
         tooltip='Towns'
-    ).properties(width=800, height=300)
+    ).properties(width=400, height=100)
 
     return points
 
