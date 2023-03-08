@@ -94,6 +94,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 # Side bar
 st.sidebar.subheader("What are PFAS?")
 st.sidebar.info("PFAS (per and polyfluoroalkyl substances) are a group of man-made chemicals that have been used in a variety of industrial and consumer products since the 1950s. They are highly persistent and do not break down easily in the environment or in the human body, earning them the nickname 'forever chemicals.'")

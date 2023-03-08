@@ -192,10 +192,14 @@ if len(selectedYears)==1:
     chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0], "blues")
     st.altair_chart(chart1, use_container_width=True)
 
+
 if len(selectedYears)==2:
+
+    st.markdown("###"+selectedYears[0])
     chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0], "blues")
     st.altair_chart((chart1), use_container_width=True)
 
+    st.markdown("###"+selectedYears[1])
     chart2 = base + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1], "oranges")
     st.altair_chart((chart2), use_container_width=True)
     
