@@ -1,6 +1,7 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
+import numpy as np
 
 # Time Series Chart - show PFA levels over time for a given site
 # Add custom CSS to change the color of the first info box in the sidebar
@@ -105,7 +106,7 @@ st.markdown(html_temp,unsafe_allow_html=True)
 st.write("")
 st.write("")
 
-# st.write("PFA Levels over time")
+st.write("PFA Levels over time")
 
 # Pre-processing - get relevant unique values for columns and scale levels
 data1 = pd.read_csv("final_mass_data.csv")
@@ -125,7 +126,27 @@ selector = alt.selection_single( fields = ['Chemical'])
 
 data["Date"] = data["Date"].str.replace("T.*", "", regex=True)
 
-base = alt.Chart(data).properties().encode(
+def averageReadings(data):
+    
+    finalData = pd.DataFrame(columns=["Chemical", "Date", "Level"])
+
+    uniq_chem = data["Abbreviation"].unique()
+    print(uniq_chem)
+
+    for chem in uniq_chem:
+        chem_rows = data[data["Abbreviation"]==chem]
+        chem_dates = chem_rows["Date"].unique()
+
+        for date in chem_dates:
+            date_rows = chem_rows[chem_rows["Date"]==date]
+            meanLevel = np.mean(date_rows["Levels"])
+            finalData = finalData.append({"Chemical": chem, "Date": date, "Level": meanLevel}, ignore_index=True)
+
+    return finalData
+
+cleanData = averageReadings(data)
+
+base = alt.Chart(cleanData).properties().encode(
     x=alt.X('Date:T'),
     y=alt.Y('Levels:Q'),
     color=alt.Color('Abbreviation:N')
