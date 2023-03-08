@@ -172,9 +172,9 @@ base = alt.Chart(data_map).mark_geoshape(
 
 markSchemes = ["circle", "square", "point"]
 
-def createChart(inputData, markScheme):
+def createChart(inputData, markScheme, colorScheme):
 
-    levelsScale = alt.Scale(domain=[inputData['Levels'].quantile(0.1), inputData['Levels'].quantile(0.9)], scheme="blues", clamp=True)
+    levelsScale = alt.Scale(domain=[inputData['Levels'].quantile(0.1), inputData['Levels'].quantile(0.9)], scheme=colorScheme, clamp=True)
     levelsColor = alt.Color(field='Levels', type='quantitative', scale=levelsScale, legend=alt.Legend(title="Contamination Levels"))
 
     points = alt.Chart(inputData, mark=markScheme).encode(
@@ -189,22 +189,17 @@ def createChart(inputData, markScheme):
     return points
 
 if len(selectedYears)==1:
-    chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
+    chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0], "blues")
     st.altair_chart(chart1, use_container_width=True)
 
 if len(selectedYears)==2:
-    chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
+    chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0], "blues")
     st.altair_chart((chart1), use_container_width=True)
 
-    chart2 = base + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
+    chart2 = base + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1], "oranges")
     st.altair_chart((chart2), use_container_width=True)
     
-    # st.altair_chart(chart2, use_container_width=True)
 
-# elif len(selectedYears)==3:
-#     with st.container:
-#         chart1 = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
-#         chart2 = chart + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
-#         chart3 = chart + createChart(subData[subData["Year"]==selectedYears[2]], markSchemes[2])
-#         st.altair_chart(chart1 | chart2 | chart3, use_container_width=True)
+
+
 
