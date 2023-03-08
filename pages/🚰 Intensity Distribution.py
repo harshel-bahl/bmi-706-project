@@ -193,7 +193,7 @@ chart = base
 # if len(selectedYears)==1:
 #     chart1 = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
 #     st.altair_chart(chart1, use_container_width=True)
-with st.sidebar:
+with st.container:
     
     # chart1 = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
     # chart2 = chart + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
