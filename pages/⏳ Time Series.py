@@ -118,9 +118,9 @@ site_select = st.selectbox(label="Site", options=siteslist, index=0)
 
 data = data1[data1["Site"]==site_select]
 
-chemicalslist = data1['Chemical'].unique()
+chemicalslist = data1['Abbreviation'].unique()
 
-chemicals = st.multiselect(label="Abbreviation", options = chemicalslist, default="PFOS")
+chemicals = st.multiselect(label="Chemical", options = chemicalslist, default="PFOS")
 
 data = data[data["Chemical"].isin(chemicals)]
 
