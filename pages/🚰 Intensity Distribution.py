@@ -116,8 +116,15 @@ st.write("")
 
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=2)
+
+if len(selectedYears) == 0:
+    st.error("Please select at least one option.")
+    selectedYears = [2019]
+
 subData = data[data["Year"].isin(selectedYears)]
 subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
+
+
 
 # create contaminant groups for slider
 quantiles = [subData["Levels"].quantile(0.9),
