@@ -164,8 +164,8 @@ base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).project('mercator').properties(
-    width=400,
-    height=100
+    width=800,
+    height=200
 )
 
 # add threshold levels in place of quantiles for interpretability
@@ -184,7 +184,7 @@ def createChart(inputData, markScheme):
         size=alt.value(100),
         opacity=alt.value(0.5),
         tooltip='Towns'
-    ).properties(width=800, height=200)
+    )
 
     return points
 
