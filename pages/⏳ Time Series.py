@@ -149,7 +149,7 @@ cleanData = averageReadings(data)
 base = alt.Chart(cleanData).properties().encode(
     x=alt.X('Date:T'),
     y=alt.Y('Levels:Q'),
-    color=alt.Color('Abbreviation:N')
+    color=alt.Color('Chemical:N')
 ).add_selection(selector).transform_filter(selector)
 
 brush = alt.selection_interval(encodings=['x'])
