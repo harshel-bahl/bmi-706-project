@@ -189,6 +189,8 @@ def createChart(inputData, markScheme, colorScheme):
     return points
 
 if len(selectedYears)==1:
+    
+    st.markdown("###"+selectedYears[0])
     chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0], "blues")
     st.altair_chart(chart1, use_container_width=True)
 
