@@ -150,6 +150,9 @@ base = alt.Chart(cleanData).properties().encode(
     x=alt.X('Date:T'),
     y=alt.Y('Levels:Q'),
     color=alt.Color('Chemical:N')
+).properties(
+    width=800,
+    height=400
 ).add_selection(selector).transform_filter(selector)
 
 brush = alt.selection_interval(encodings=['x'])
