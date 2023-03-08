@@ -122,7 +122,7 @@ chemicalslist = data1['Abbreviation'].unique()
 
 chemicals = st.multiselect(label="Chemical", options = chemicalslist, default="PFOS")
 
-data = data[data["Chemical"].isin(chemicals)]
+data = data[data["Abbreviation"].isin(chemicals)]
 
 selector = alt.selection_single( fields = ['Chemical'])
 
