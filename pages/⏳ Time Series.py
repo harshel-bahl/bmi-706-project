@@ -140,7 +140,7 @@ def averageReadings(data):
         for date in chem_dates:
             date_rows = chem_rows[chem_rows["Date"]==date]
             meanLevel = np.mean(date_rows["Levels"])
-            finalData = finalData.append({"Chemical": chem, "Date": date, "Level": meanLevel}, ignore_index=True)
+            finalData = finalData.append({"Chemical": chem, "Date": date, "Levels": meanLevel}, ignore_index=True)
 
     return finalData
 
