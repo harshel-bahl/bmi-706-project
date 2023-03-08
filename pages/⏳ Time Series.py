@@ -120,26 +120,26 @@ chemicalslist = data1['Chemical'].unique()
 
 chemicals=st.multiselect(label="Chemical", options = chemicalslist, default = "PFOS")
 
-data = data[data["Chemical"].isin(chemicals)]
+# data = data[data["Chemical"].isin(chemicals)]
 
-selector = alt.selection_single( fields = ['Chemical'])
+# selector = alt.selection_single( fields = ['Chemical'])
 
-base = alt.Chart(data).properties().encode(
-    x=alt.X('Date:T'),
-    y=alt.Y('Levels:Q'),
-    color=alt.Color('Chemical:N')
-).add_selection(selector).transform_filter(selector)
+# base = alt.Chart(data).properties().encode(
+#     x=alt.X('Date:T'),
+#     y=alt.Y('Levels:Q'),
+#     color=alt.Color('Chemical:N')
+# ).add_selection(selector).transform_filter(selector)
 
-brush = alt.selection_interval(encodings=['x'])
+# brush = alt.selection_interval(encodings=['x'])
 
-upper=base.mark_line(point=True).encode(
-    alt.X('Date:T', scale = alt.Scale(domain=brush))
-).transform_filter(brush)
+# upper=base.mark_line(point=True).encode(
+#     alt.X('Date:T', scale = alt.Scale(domain=brush))
+# ).transform_filter(brush)
 
-lower = base.mark_bar().add_selection(brush)
+# lower = base.mark_bar().add_selection(brush)
 
-lower=lower.properties(height=50)
+# lower=lower.properties(height=50)
 
-chart1=upper & lower
+# chart1=upper & lower
 
-st.altair_chart(chart1, use_container_width=True)
+# st.altair_chart(chart1, use_container_width=True)
