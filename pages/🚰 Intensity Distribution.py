@@ -184,7 +184,7 @@ def createChart(inputData, markScheme):
         size=alt.value(100),
         opacity=alt.value(0.5),
         tooltip='Towns'
-    )
+    ).properties(width=800, height=300)
 
     return points
 
@@ -198,7 +198,7 @@ with st.container():
     chart1 = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
     chart2 = chart + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
     
-    st.altair_chart((chart1 | chart2).properties(width=800, height=300), use_container_width=True)
+    st.altair_chart((chart1 | chart2), use_container_width=True)
     # st.altair_chart(chart2, use_container_width=True)
 
 # elif len(selectedYears)==3:
