@@ -103,16 +103,16 @@ st.sidebar.info("Efforts are underway to regulate and phase out the use of PFAS 
 
 # App Aesthetics
 
-# html_temp = """
-#     <div style="background-color:tomato;padding:10px">
-#     <h2 style="color:white;text-align:center;">PFAS Water Contamination Monitoring App</h2>
-#     </div>
-#     """
-# st.markdown(html_temp,unsafe_allow_html=True)
+html_temp = """
+    <div style="background-color:tomato;padding:10px">
+    <h2 style="color:white;text-align:center;">PFAS Water Contamination Monitoring App</h2>
+    </div>
+    """
+st.markdown(html_temp,unsafe_allow_html=True)
 
 
-# st.write("")
-# st.write("")
+st.write("")
+st.write("")
 
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=2)
