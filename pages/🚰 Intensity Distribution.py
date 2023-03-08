@@ -164,8 +164,8 @@ base = alt.Chart(data_map).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).project('mercator').properties(
-    width=800,
-    height=600
+    width=400,
+    height=100
 )
 
 # add threshold levels in place of quantiles for interpretability
