@@ -103,19 +103,19 @@ st.sidebar.info("Efforts are underway to regulate and phase out the use of PFAS 
 
 # App Aesthetics
 
-html_temp = """
-    <div style="background-color:tomato;padding:10px">
-    <h2 style="color:white;text-align:center;">PFAS Water Contamination Monitoring App</h2>
-    </div>
-    """
-st.markdown(html_temp,unsafe_allow_html=True)
+# html_temp = """
+#     <div style="background-color:tomato;padding:10px">
+#     <h2 style="color:white;text-align:center;">PFAS Water Contamination Monitoring App</h2>
+#     </div>
+#     """
+# st.markdown(html_temp,unsafe_allow_html=True)
 
 
 st.write("")
 st.write("")
 
 # multi-selector to choose which years to display on chart
-selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=3)
+selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=2)
 subData = data[data["Year"].isin(selectedYears)]
 subData["Levels"] = (subData["Levels"]-subData["Levels"].min())/(subData["Levels"].max()-subData["Levels"].min())*100
 
@@ -188,17 +188,16 @@ def createChart(inputData, markScheme):
 
     return points
 
-chart = base
+if len(selectedYears)==1:
+    chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
+    st.altair_chart(chart1, use_container_width=True)
 
-# if len(selectedYears)==1:
-#     chart1 = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
-#     st.altair_chart(chart1, use_container_width=True)
+if len(selectedYears)==2:
+    chart1 = base + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
+    st.altair_chart((chart1), use_container_width=True)
 
-chart1 = chart + createChart(subData[subData["Year"]==selectedYears[0]], markSchemes[0])
-st.altair_chart((chart1), use_container_width=True)
-
-chart2 = chart + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
-st.altair_chart((chart2), use_container_width=True)
+    chart2 = base + createChart(subData[subData["Year"]==selectedYears[1]], markSchemes[1])
+    st.altair_chart((chart2), use_container_width=True)
     
     # st.altair_chart(chart2, use_container_width=True)
 
