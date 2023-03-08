@@ -3,9 +3,6 @@ import pandas as pd
 import streamlit as st
 
 # Time Series Chart - show PFA levels over time for a given site
-
-
-
 # Add custom CSS to change the color of the first info box in the sidebar
 st.markdown(
     """
@@ -126,6 +123,8 @@ data = data[data["Abbreviation"].isin(chemicals)]
 
 selector = alt.selection_single( fields = ['Chemical'])
 
+data["Date"] = data["Date"].str.replace("T.*", "", regex=True)
+
 base = alt.Chart(data).properties().encode(
     x=alt.X('Date:T'),
     y=alt.Y('Levels:Q'),
@@ -134,7 +133,7 @@ base = alt.Chart(data).properties().encode(
 
 brush = alt.selection_interval(encodings=['x'])
 
-upper=base.mark_line(point=True).encode(
+upper = base.mark_line(point=True).encode(
     alt.X('Date:T', scale = alt.Scale(domain=brush))
 ).transform_filter(brush)
 
@@ -142,6 +141,6 @@ lower = base.mark_bar().add_selection(brush)
 
 lower=lower.properties(height=50)
 
-chart1=upper & lower
+chart1 = upper & lower
 
 st.altair_chart(chart1, use_container_width=True)
