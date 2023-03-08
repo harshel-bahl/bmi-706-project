@@ -111,8 +111,8 @@ st.sidebar.info("Efforts are underway to regulate and phase out the use of PFAS 
 # st.markdown(html_temp,unsafe_allow_html=True)
 
 
-st.write("")
-st.write("")
+# st.write("")
+# st.write("")
 
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=2)
