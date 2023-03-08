@@ -113,10 +113,10 @@ st.write("PFA Levels over time")
 # Pre-processing - get relevant unique values for columns and scale levels
 data1 = pd.read_csv("final_mass_data.csv")
 
-siteslist = data1['Site'].unique()
-site_select = st.selectbox(label="Site", options=siteslist, index=0)
+siteslist = data1['Town'].unique()
+site_select = st.selectbox(label="Town", options=siteslist, index=0)
 
-data = data1[data1["Site"]==site_select]
+data = data1[data1["Town"]==site_select]
 
 chemicalslist = data1['Abbreviation'].unique()
 
