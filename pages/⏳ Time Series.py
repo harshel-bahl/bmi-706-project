@@ -139,6 +139,8 @@ intervals = {20: "20D",
              200: "200D"
              }
 
+st.write("Use the slider below to smooth the graph by computing a nearest-neighbour n-day moving average!")
+
 intervalAverage = st.slider("Interval", min_value=20, max_value=200, step=20, value=20)
 
 def averageReadings(data):
