@@ -164,7 +164,7 @@ def createGroups(rowValues):
 
 subData["LevelGroup"] = subData.apply(lambda rowValues: createGroups(rowValues), axis=1)
 
-selectedLevelGroup = st.slider("Inverse Cumulative Groups - A value of 80 will show the top 20% of contaminated regions", min_value=0, max_value=90, step=10, value=50)
+selectedLevelGroup = st.slider("Decile Groups - A value of 80 will show the 8th decile (80-90%) of contaminated regions", min_value=0, max_value=90, step=10, value=50)
 
 subData = subData[subData["LevelGroup"]==selectedLevelGroup]
 
