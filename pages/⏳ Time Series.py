@@ -127,19 +127,19 @@ selector = alt.selection_single( fields = ['Chemical'])
 
 data["Date"] = data["Date"].str.replace("T.*", "", regex=True)
 
-intervals = {10: "10D",
-             20: "20D",
-             30: "30D", 
-             40: "40D", 
-             50: "50D", 
+intervals = {20: "20D", 
+             40: "40D",  
              60: "60D", 
-             70: "70D", 
              80: "80D",
-             90: "90D", 
              100: "100D", 
+             120: "120D",
+             140: "140D",
+             160: "160D",
+             180: "180D",
+             200: "200D"
              }
 
-intervalAverage = st.slider("Interval", min_value=10, max_value=100, step=10, value=10)
+intervalAverage = st.slider("Interval", min_value=20, max_value=200, step=20, value=20)
 
 def averageReadings(data):
     
