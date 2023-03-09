@@ -2,6 +2,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 import numpy as np
+import datetime
 
 # Time Series Chart - show PFA levels over time for a given site
 # Add custom CSS to change the color of the first info box in the sidebar
@@ -112,7 +113,7 @@ st.write("PFA Levels over time")
 data1 = pd.read_csv("final_mass_data.csv")
 
 siteslist = data1['Towns'].unique()
-site_select = st.selectbox(label="Towns", options=siteslist, index=0)
+site_select = st.selectbox(label="Towns", options=siteslist, index=1)
 
 data = data1[data1["Towns"]==site_select]
 
@@ -126,12 +127,25 @@ selector = alt.selection_single( fields = ['Chemical'])
 
 data["Date"] = data["Date"].str.replace("T.*", "", regex=True)
 
+intervals = {10: "10D",
+             20: "20D",
+             30: "30D", 
+             40: "40D", 
+             50: "50D", 
+             60: "60D", 
+             70: "70D", 
+             80: "80D",
+             90: "90D", 
+             100: "100D", 
+             }
+
+intervalAverage = st.slider("Interval", min_value=10, max_value=100, step=10, value=10)
+
 def averageReadings(data):
     
-    finalData = pd.DataFrame(columns=["Chemical", "Date", "Level"])
+    finalData = pd.DataFrame(columns=["Abbreviation", "Date", "Levels"])
 
     uniq_chem = data["Abbreviation"].unique()
-    print(uniq_chem)
 
     for chem in uniq_chem:
         chem_rows = data[data["Abbreviation"]==chem]
@@ -140,16 +154,40 @@ def averageReadings(data):
         for date in chem_dates:
             date_rows = chem_rows[chem_rows["Date"]==date]
             meanLevel = np.mean(date_rows["Levels"])
-            finalData = finalData.append({"Chemical": chem, "Date": date, "Levels": meanLevel}, ignore_index=True)
+            finalData = finalData.append({"Abbreviation": chem, "Date": date, "Levels": meanLevel}, ignore_index=True)
 
     return finalData
 
 cleanData = averageReadings(data)
 
-base = alt.Chart(cleanData).properties().encode(
+def dayAverage(inputData, interval):
+    
+    inputData["Date"] = pd.to_datetime(inputData["Date"])
+    
+    dates = inputData["Date"]
+
+    minDate = min(dates)
+    maxDate = max(dates)
+
+    dateRange = pd.date_range(minDate, maxDate, freq=interval, inclusive="both")
+
+    def closestDate(inputDate, dateRange):
+        close_dict = { abs(inputDate - testDate): testDate for testDate in dateRange}
+        res = close_dict[min(close_dict.keys())]
+        return res
+
+    outputData = inputData      
+    outputData["Date"] = inputData["Date"].apply(lambda x: closestDate(x, dateRange))
+    outputData = averageReadings(outputData)
+
+    return outputData
+
+dayAveragedData = dayAverage(cleanData, intervals[intervalAverage])
+
+base = alt.Chart(dayAveragedData).properties().encode(
     x=alt.X('Date:T'),
     y=alt.Y('Levels:Q'),
-    color=alt.Color('Chemical:N')
+    color=alt.Color('Abbreviation:N')
 ).properties(
     width=600,
     height=500
