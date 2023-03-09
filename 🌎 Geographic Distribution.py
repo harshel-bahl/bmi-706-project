@@ -155,12 +155,12 @@ st.write("")
 substances = st.multiselect(
     "Select PFAS for Geographic Distribution:",
     options = Substance_type,
-    default = ["PFOS"]
+    default = ["PFAS6"]
 )
 
 if len(substances) == 0:
     st.error("Please select at least one option.")
-    substances = ["PFOS"]
+    substances = ["PFAS6"]
 filtered_data = data[data['Chemical'].isin(substances)]
 
 # Create a dictionary to map each substance to its corresponding color

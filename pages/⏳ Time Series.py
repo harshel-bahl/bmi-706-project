@@ -119,7 +119,7 @@ data = data1[data1["Towns"]==site_select]
 
 chemicalslist = data1['Abbreviation'].unique()
 
-chemicals = st.multiselect(label="Chemical", options = chemicalslist, default="PFOS")
+chemicals = st.multiselect(label="Chemical", options = chemicalslist, default="PFAS6")
 
 data = data[data["Abbreviation"].isin(chemicals)]
 
