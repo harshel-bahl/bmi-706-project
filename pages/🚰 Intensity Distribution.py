@@ -114,6 +114,8 @@ st.markdown(html_temp,unsafe_allow_html=True)
 st.write("")
 st.write("")
 
+st.write("Choose a two years to draw comparisons!")
+
 # multi-selector to choose which years to display on chart
 selectedYears = st.multiselect("Years Shown", poss_years, default=poss_years[0], max_selections=2)
 
